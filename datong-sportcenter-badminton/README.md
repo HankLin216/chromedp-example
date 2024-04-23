@@ -30,7 +30,7 @@ To run the program in cmd or PowerShell, use the following command (Only necessa
 
 - 不要真的預約，試跑想看結果:  
 效果是"立刻"自動預約定位2月16日的早上8點和傍晚18點，但會在最後確定的視窗停下來。  
-這個參數建議-l要設定為true，否則看不到瀏覽器執行的動作 (-l default is true)。
+
 ``` cmd
 .\datong_sportcenter_badminton.exe -n "A123456789" -p "password" -h 8,18 -d "02-16" --dry=true
 ```
