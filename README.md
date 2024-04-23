@@ -2,7 +2,8 @@
 
 Automated reservation toolkit using the chromedp package
 
-[![GitHub release](https://img.shields.io/github/release/username/repo.svg)](https://github.com/HankLin216/chromedp-example/releases/)
+![GitHub Release](https://img.shields.io/github/v/release/HankLin216/chromedp-example)
+
 
 # Packages Used
 
