@@ -26,7 +26,6 @@ var (
 	hoursToReserveStr  string
 	dateStr            string
 	cronExpr           string
-	lauch              bool
 	dryRun             bool
 	loginRetryTimes    int
 	loginRetryPeriod   int
@@ -70,7 +69,6 @@ func init() {
 	cronExplain += "     0 0 2 ? 3 0 表示 0秒、0分、2點、忽略、3月、每個星期日。\n"
 	cronExplain += "想要客製化更多時段，請查詢cron expression (記得不要輸入年)\n"
 	flag.StringVar(&cronExpr, "c", "", cronExplain)
-	flag.BoolVar(&lauch, "l", true, "要不要開瀏覽器，不想開就輸入false，這個參數要加=，例如-l=false")
 	flag.BoolVar(&dryRun, "dry", false, "要不要真的訂位，想試跑看看的話就輸入true，這個參數要加=，例如-dry=true")
 	flag.IntVar(&loginRetryTimes, "lrt", 5, "進階設定，登錄的重試次數")
 	flag.IntVar(&loginRetryPeriod, "ltp", 300, "進階設定，登錄的重試等待週期(毫秒)，網頁網速夠快可以調低試試看")
@@ -254,7 +252,6 @@ func checkArgsAndShow() bool {
 	printf(fmt.Sprintf("  想預約的日期: %d-%d\n", reserveMonth, reserveDay), SYSTEM)
 	printf(fmt.Sprintf("  想預約的時段: %s\n", joinIntSlice(hoursToReserve)), SYSTEM)
 	printf(fmt.Sprintf("  想執行自動預約的cron表達示: %s\n", cronExprString), SYSTEM)
-	printf(fmt.Sprintf("  想看瀏覽器跑來跑去: %t\n", lauch), SYSTEM)
 	printf(fmt.Sprintf("  假跑?: %t\n", dryRun), SYSTEM)
 	printf(fmt.Sprintf("  *登錄的重試次數: %d\n", loginRetryTimes), SYSTEM)
 	printf(fmt.Sprintf("  *登錄的重試等待週期(毫秒): %d\n", loginRetryPeriod), SYSTEM)
@@ -432,7 +429,7 @@ func ensure(ctx context.Context, id int, reserveTime int, result <-chan string, 
 	return fmt.Errorf("預約失敗，已嘗試%d次了", retry)
 }
 
-func reserve(id int, lauch bool, dryRun bool, reserveTime int, reserveMonth int, reserveDay int) error {
+func reserve(id int, dryRun bool, reserveTime int, reserveMonth int, reserveDay int) error {
 
 	// create chan
 	ch := make(chan string)
@@ -440,7 +437,7 @@ func reserve(id int, lauch bool, dryRun bool, reserveTime int, reserveMonth int,
 
 	// options
 	opts := append(c.DefaultExecAllocatorOptions[:],
-		c.Flag("headless", !lauch),
+		c.Flag("headless", false),
 	)
 
 	allocCtx, cancel := c.NewExecAllocator(context.Background(), opts...)
@@ -595,7 +592,7 @@ func start() {
 			defer wg.Done()
 
 			printf(fmt.Sprintf("[%d]趕快來搶%d月%d日的%d點的羽球場\n", id, reserveMonth, reserveDay, t), SYSTEM)
-			err := reserve(id, lauch, dryRun, t, reserveMonth, reserveDay)
+			err := reserve(id, dryRun, t, reserveMonth, reserveDay)
 			if err != nil {
 				printf(fmt.Sprintf("[%d]%s\n", id, err.Error()), ERROR)
 				printf(fmt.Sprintf("[%d][ಥ_ಥ]搶%d月%d日的%d點的羽球場失敗了!\n", id, reserveMonth, reserveDay, t), ERROR)

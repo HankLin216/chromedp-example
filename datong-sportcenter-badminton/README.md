@@ -3,7 +3,10 @@
 You can set the date and time for automatic booking of badminton courts at Tatong Sports Center. You can also specify the time when the automatic reservation program is activated.
 
 # Download
-https://github.com/HankLin216/chromedp-example/releases
+https://github.com/HankLin216/chromedp-example/releases  
+  
+![Dowload path picture](https://github.com/HankLin216/chromedp-example/blob/master/datong-sportcenter-badminton/images/downloadPath.png?raw=true)
+
 
 # Usage
 
@@ -12,9 +15,9 @@ To run the program in cmd or PowerShell, use the following command (Only necessa
 ``` cmd
 .\datong_sportcenter_badminton.exe -n [身分證字號] -p [密碼] -h [要預約場地的時間]
 ```
-### Example
+### ☀️Example
 - 只使用必要參數:  
-效果是"立刻"自動預約定位8天後的早上8點和傍晚18點
+效果是"立刻"自動預約定位7天後的早上8點和傍晚18點
 ``` cmd
 .\datong_sportcenter_badminton.exe -n "A123456789" -p "password" -h 8,18
 ```
@@ -23,11 +26,6 @@ To run the program in cmd or PowerShell, use the following command (Only necessa
 效果是"立刻"自動預約定位2月16日的早上8點和傍晚18點
 ``` cmd
 .\datong_sportcenter_badminton.exe -n "A123456789" -p "password" -h 8,18 -d "02-16"
-```
-
-- 關閉瀏覽器:
-``` cmd
-.\datong_sportcenter_badminton.exe -n "A123456789" -p "password" -h 8,18 -d "02-16" -l=false
 ```
 
 - 不要真的預約，試跑想看結果:  
@@ -43,12 +41,12 @@ To run the program in cmd or PowerShell, use the following command (Only necessa
 .\datong_sportcenter_badminton.exe -n "A123456789" -p "password" -h 8,18 -d "02-16" -c "30 45 10 14 2 ?"
 ```
 - 想要每周五早上執行自動預約下周六的時段:
-效果是會在"每周五早上"自動預約定位8天後(下周六)的早上8點和傍晚18點。  
+效果是會在"每周五凌晨"自動預約定位7天後(下周五)的早上8點和傍晚18點。  
 ``` cmd
 .\datong_sportcenter_badminton.exe -n "A123456789" -p "password" -h 8,18 -c "0 0 0 ? * 5"
 ```
 
-### All Program Parameters
+### ⚡ All Program Parameters
 - -c string
 你想要啟動自動預約的時間與日期，格式為cron表達示。  
 都不輸入表示立刻啟動。  
@@ -71,10 +69,6 @@ To run the program in cmd or PowerShell, use the following command (Only necessa
 - -h string  
 你想要預約的時段，每個時段長度預約為一小時，只<span style="color:#FFECA1">接受格式為24小時制</span>，範圍為6-21。  
 可以支援多個時段，<span style="color:#FFECA1">請用，號隔開</span>。例如你想要14到16，請輸入14,15。
-
-- -l  
-要不要開瀏覽器，不想開就輸入false，這個參數要加=，例如<span style="color:#FFECA1">-l=false</span> (default true)  
-偷偷說，不開比較快喔...
 
 - -lrt int  
 <span style="color:#FFECA1">進階設定</span>，登錄的重試次數 (default 5)
